@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -11,11 +11,11 @@ namespace Queries.Core.Repositories
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         // This method was not in the videos, but I thought it would be useful to add.
-        //TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
-
+        
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
     }

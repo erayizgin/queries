@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
+using Queries.Persistence;
 
 namespace Queries
 {
@@ -9,7 +10,21 @@ namespace Queries
     {
         static void Main(string[] args)
         {
-            var context = new PlutoContext();
+
+            using(var unitOfWork = new UnitOfWork(new PlutoContext()))
+            {
+                //Example1
+                var course = unitOfWork.Courses.Get(1);
+
+                //Example2
+                var courses = unitOfWork.Courses.GetCoursesWithAuthors(1, 4);
+
+                //Example3
+                var author = unitOfWork.Authors.GetAuthorWithCourses(1);
+                unitOfWork.Courses.RemoveRange(author.Courses);
+                unitOfWork.Authors.Remove(author);
+                unitOfWork.Complete();
+            }
 
             //Current Values and Original Values
             //var entries = context.ChangeTracker.Entries();
