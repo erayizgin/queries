@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +11,83 @@ namespace Queries
         {
             var context = new PlutoContext();
 
+            //Current Values and Original Values
+            //var entries = context.ChangeTracker.Entries();
+            //foreach (var entry in entries)
+            //{
+            //    Console.WriteLine(entry.State);
+            //}
+
+            //Removing Object
+            //var course = context.Courses.Find(6);
+            //context.Courses.Remove(course);
+            //context.SaveChanges();
+
+            //Removing Object - Without Cascade Delete
+            //var author = context.Authors.Include(a => a.Courses).Single(a => a.Id == 2);
+            //context.Courses.RemoveRange(author.Courses);
+            //context.Authors.Remove(author);
+
+            //context.SaveChanges();
+
+            //Updating Objects
+            //var course = context.Courses.Find(4);
+            //course.Name = "New Name";
+            //course.AuthorId = 2;
+
+            //context.SaveChanges();
+
+            //First Approach
+            //var author = context.Authors.Single(a => a.Id == 1);
+            //Second Approach
+            //
+            //Use the foreign key property
+
+            //Adding Objects
+            //var course = new Course
+            //{
+            //    Name = "New Course",
+            //    Description = "New Description",
+            //    FullPrice = 19.95f,
+            //    Level = 1,
+            //    //Author = author
+            //    AuthorId = 1
+            //};
+
+
+            //IN Operator - select * from Courses where AuthorID in (1,2,3,4)
+            //var authors = context.Authors.ToList();
+            //var authorIds = authors.Select(a => a.Id);
+
+            //context.Courses.Where(c => authorIds.Contains(c.AuthorId) && c.FullPrice == 0).Load();
+
+            //Explicit Loading
+            //var author = context.Authors.Single(a => a.Id == 1);
+
+            //Explicit Loading MSDN WAY
+            //context.Entry(author).Collection(a => a.Courses).Query().Where(c => c.FullPrice == 0).Load();
+
+            //Mosh way
+            //context.Courses.Where(c => c.AuthorId == author.Id && c.FullPrice == 0).Load();
+
+            //var courses = context.Courses.Include("Author").ToList();
+            //Eager Loading 1.1
+            //var courses = context.Courses.Include(c => c.Author).ToList();
+
+            //foreach (var course in courses)
+            //{
+            //    Console.WriteLine("{0} by {1}", course.Name, course.Author.Name);
+            //}
+            //Eager Loading 1.2 - For Single Properties
+            //context.Courses.Include(c => c.Author.Address).ToList();
+
+            //Eager Loading 1.3 - For collection Properties
+            //context.Courses.Include(a => a.Tags.Select(t => t.Moderator));
+
             //Lazy Loading
-            var course = context.Courses.Single(c => c.Id == 2);
-            foreach (var tag in course.Tags)
-                Console.WriteLine(tag.Name);
+            //var course = context.Courses.Single(c => c.Id == 2);
+            //foreach (var tag in course.Tags)
+            //    Console.WriteLine(tag.Name);
 
             //IEnumerable
             //IEnumerable<Course> courses = context.Courses;
